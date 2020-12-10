@@ -1,0 +1,79 @@
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100">
+      <div class="login100-pic js-tilt" data-tilt>
+        <img src="assets/img-01.png" alt="IMG" />
+      </div>
+
+      <form
+        class="login100-form validate-form"
+        (ngSubmit)="onSubmit(f)"
+        #f="ngForm"
+      >
+        <span class="login100-form-title"> Member Signup </span>
+
+        <div
+          class="wrap-input100 validate-input form-group"
+          data-validate="Valid email is required: ex@abc.xyz"
+        >
+          <input
+            style="border-radius: 25px"
+            class="input100 form-control"
+            type="text"
+            name="email"
+            placeholder="Email"
+            ngModel
+            required
+            email
+            #email="ngModel"
+          />
+          <span class="focus-input100"></span>
+          <span
+            style="font-size: 10px; margin-left: 15px"
+            class="help-block"
+            *ngIf="!email.valid && email.touched"
+            >*Please enter a valid email!</span
+          >
+        </div>
+
+        <div
+          class="wrap-input100 validate-input form-group"
+          data-validate="Password is required"
+        >
+          <input
+            style="border-radius: 25px"
+            class="input100 form-control"
+            type="password"
+            ngModel
+            name="pass"
+            placeholder="Password"
+            required
+            #pass="ngModel"
+          />
+          <span class="focus-input100"></span>
+          <span
+            style="font-size: 10px; margin-left: 15px"
+            *ngIf="!pass.valid && pass.touched"
+            class="help-block"
+            >*Enter valid password</span
+          >
+        </div>
+
+        <div class="container-login100-form-btn">
+          <button type="submit" class="login100-form-btn">Sign up</button>
+        </div>
+        <br />
+        <div class="text-center p-t-136">
+          <span style="font-size: 11px"
+            >Already have account<a class="txt2" href="#" routerLink="/login">
+              Login!
+              <i
+                class="fa fa-long-arrow-right m-l-5"
+                aria-hidden="true"
+              ></i> </a
+          ></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

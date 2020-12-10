@@ -1,0 +1,82 @@
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100">
+      <div class="login100-pic js-tilt" data-tilt>
+        <img src="assets/img-01.png" alt="IMG" />
+      </div>
+
+      <form
+        class="login100-form validate-form"
+        (ngSubmit)="onSubmit(f)"
+        #f="ngForm"
+      >
+        <span class="login100-form-title"> Member Login </span>
+
+        <div class="wrap-input100 validate-input form-group">
+          <input
+            style="border-radius: 25px"
+            class="input100 form-control"
+            type="text"
+            name="email"
+            placeholder="Email"
+            ngModel
+            required
+            email
+            #email="ngModel"
+          />
+          <span class="focus-input100"></span>
+          <span
+            style="font-size: 10px; margin-left: 15px"
+            class="help-block"
+            *ngIf="!email.valid && email.touched"
+            >*Please enter a valid email!</span
+          >
+        </div>
+
+        <div class="wrap-input100 validate-input form-group">
+          <input
+            style="border-radius: 25px"
+            class="input100 form-control"
+            type="password"
+            ngModel
+            name="pass"
+            placeholder="Password"
+            required
+            #pass="ngModel"
+          />
+          <span class="focus-input100"></span>
+          <span
+            style="font-size: 10px; margin-left: 15px"
+            *ngIf="!pass.valid && pass.touched"
+            class="help-block"
+            >*Enter valid password</span
+          >
+        </div>
+
+        <div class="container-login100-form-btn">
+          <button type="submit" class="login100-form-btn">Login</button>
+        </div>
+
+        <div class="text-center p-t-12">
+          <span class="txt1"> Forgot </span>
+          <a class="txt2" href="#">Password? </a>
+        </div>
+
+        <div class="text-center p-t-136">
+          <span style="font-size: 11px"
+            >No account?<a
+              class="txt2"
+              href="javascript:void(0)"
+              routerLink="/signup"
+            >
+              Create one!
+              <i
+                class="fa fa-long-arrow-right m-l-5"
+                aria-hidden="true"
+              ></i> </a
+          ></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
