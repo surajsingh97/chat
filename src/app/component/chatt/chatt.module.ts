@@ -3,12 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { ChattRoutingModule } from './chatt-routing.module';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    ChattRoutingModule
-  ]
+  imports: [CommonModule, ChattRoutingModule],
 })
-export class ChattModule { }
+export class ChattModule {}
