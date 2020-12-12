@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -8,11 +10,18 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   @ViewChild('f', { static: false }) loginForm: NgForm;
-  constructor() {}
+  constructor(private service: ApiService, private router: Router) {}
 
   ngOnInit(): void {}
 
-  onSubmit(form: NgForm): void {
-    console.log(form.value);
+  async onSubmit(form: NgForm): Promise<void> {
+    const formData = {
+      email: form.value.email,
+      password: form.value.password
+    };
+    console.log('this is ' , formData);
+    const data = await this.service.request('login', formData);
+    localStorage.setItem('token', data.tok);
+   
   }
 }
