@@ -19,7 +19,7 @@ export class SignupComponent implements OnInit {
     const formdata = {
       userName: form.value.username,
       email: form.value.email,
-      password: form.value.password
+      password: form.value.password,
     };
     const data = await this.service.request('signup', formdata);
     this.router.navigateByUrl('/login');

@@ -17,11 +17,10 @@ export class LoginComponent implements OnInit {
   async onSubmit(form: NgForm): Promise<void> {
     const formData = {
       email: form.value.email,
-      password: form.value.password
+      password: form.value.password,
     };
-    console.log('this is ' , formData);
+    console.log('this is ', formData);
     const data = await this.service.request('login', formData);
     localStorage.setItem('token', data.tok);
-   
   }
 }

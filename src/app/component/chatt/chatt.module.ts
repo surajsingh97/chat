@@ -8,6 +8,4 @@ import { ChatConversationComponent } from './chat-conversation/chat-conversation
   declarations: [ChatConversationComponent],
   imports: [CommonModule, ChattRoutingModule],
 })
-export class ChattModule {
-  
-}
+export class ChattModule {}
