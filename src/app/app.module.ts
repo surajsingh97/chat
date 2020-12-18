@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { AuthenticationModule } from './component/authentication/authentication.module';
 import { ChattModule } from './component/chatt/chatt.module';
 import { HttpClientModule } from '@angular/common/http';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,7 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     AuthenticationModule,
     ChattModule,
-    HttpClientModule,
+    HttpClientModule, SocketIoModule.forRoot(config)
   ],
   providers: [],
   bootstrap: [AppComponent],
