@@ -1,29 +1,10 @@
-<div class="messagebox" style="border: 1px solid black;">
-  <ul class="message-list" *ngFor="let messages of messageList">
-    <li class="messages">{{messages}}</li>
-  </ul>
+<div class="container-fluid">
+   <div class="row">
+    <div class="col-md-3">
+        <app-friend-list></app-friend-list>
+    </div>
+    <div class="col-md-9">
+        <app-chat-box></app-chat-box>
+    </div>
+   </div>
 </div>
-
-<br><br>
-  <form
-        class="login100-form validate-form"
-        (ngSubmit)="onSubmit(f)"
-        #f="ngForm"
-  >
-
-        <div class="wrap-input100 validate-input form-group">
-          <input
-            style="border-radius: 25px"
-            class="input100 form-control"
-            type="text"
-            name="msg"
-            placeholder="type your messages"
-            ngModel
-            required
-            msg
-            #msg="ngModel"
-          />
-          </div>
-          <br>
-          <button type="sumbit">submit</button>
-</form>
