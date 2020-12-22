@@ -20,7 +20,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     ChattModule,
     HttpClientModule,
     SocketIoModule.forRoot(config),
-    MDBBootstrapModule
+    MDBBootstrapModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

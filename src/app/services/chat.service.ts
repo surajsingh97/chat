@@ -16,9 +16,9 @@ export class ChatService {
   public getMessages = () => {
     // tslint:disable-next-line: deprecation
     return Observable.create((observer) => {
-            this.socket.on('new-message', (message) => {
-                observer.next(message);
-            });
+      this.socket.on('new-message', (message) => {
+        observer.next(message);
+      });
     });
-}
+  };
 }
