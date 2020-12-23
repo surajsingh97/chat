@@ -1,0 +1,77 @@
+<div class="container">
+  <!-- <h3 class=" text-center">Messaging</h3> -->
+  <div class="messaging">
+    <div class="inbox_msg">
+      <div class="inbox_people">
+        <div class="userInfo">
+          <br />
+          <div class="row">
+            <div class="col-md-6">
+              <div>
+                <div class="chat_img" style="margin-left: 5px">
+                  <img
+                    src="https://ptetutorials.com/images/user-profile.png"
+                    alt="sunil"
+                  />
+                </div>
+                <p class="name">{{ userName }}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="signout" style="float: right; padding-right: 5px">
+                <a href="javascript:void('0')" (click)="logout()"
+                  ><p class="name">
+                    signout &nbsp;<i
+                      class="fa fa-sign-out"
+                      aria-hidden="true"
+                    ></i></p
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="headind_srch">
+          <div class="recent_heading">
+            <h4>
+              Recent Chats<i class="fa fa-angle-down" aria-hidden="true"></i>
+            </h4>
+          </div>
+          <div class="srch_bar">
+            <div class="stylish-input-group">
+              <input type="text" class="search-bar" placeholder="Search" />
+              <span class="input-group-addon">
+                <button type="button">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="inbox_chat">
+          <!-- ----------------------------------friend List------------------------------------------------- -->
+          <div class="chat_list">
+            <div class="chat_people" *ngFor="let friends of friendList">
+              <br />
+              <a
+                class="chattt_msg"
+                href="javascript:void('0')"
+                (click)="sendData(friends)"
+                ><div class="chat_img">
+                  <img
+                    src="https://ptetutorials.com/images/user-profile.png"
+                    alt="sunil"
+                  />
+                </div>
+                <div class="chat_ib">
+                  <h5>{{ friends }} <span class="chat_date">Dec 25</span></h5>
+                  <p>Hii.</p>
+                </div></a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

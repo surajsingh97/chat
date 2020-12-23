@@ -22,5 +22,6 @@ export class LoginComponent implements OnInit {
     console.log('this is ', formData);
     const data = await this.service.request('login', formData);
     localStorage.setItem('token', data.tok);
+    this.router.navigateByUrl('/chat');
   }
 }

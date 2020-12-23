@@ -9,6 +9,10 @@ export class ApiEndpoint {
         url: 'signup',
         method: 'POST',
       },
+      friend: {
+        url: 'getFriend',
+        method: 'POST',
+      },
     };
   }
 }
