@@ -1,8 +1,10 @@
 <div class="row">
   <div class="col-md-4">
-    <app-friend-list></app-friend-list>
+    <ng-container>
+      <app-friend-list></app-friend-list>
+    </ng-container>
   </div>
   <div class="col-md-8">
-    <app-chat-box></app-chat-box>
+    <router-outlet></router-outlet>
   </div>
 </div>

@@ -1,4 +1,5 @@
 <div class="mesgs">
+  <p *ngIf="!check">{{ data }}</p>
   <div class="msg_history">
     <!-- ----------------------------------chat box------------------------------------------------- -->
     <div class="incoming_msg" *ngFor="let message of incomingmessageList">

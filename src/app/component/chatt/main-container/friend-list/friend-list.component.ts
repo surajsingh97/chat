@@ -10,10 +10,11 @@ import { GetsetService } from 'src/app/services/getset.service';
   styleUrls: ['./friend-list.component.css'],
 })
 export class FriendListComponent implements OnInit {
-  friendList: string[] = [];
+  friendList: any;
   userName: string;
   friendData: any;
   id: any;
+  friendId: any;
   constructor(
     private getsetService: GetsetService,
     private apiService: ApiService,
@@ -33,13 +34,15 @@ export class FriendListComponent implements OnInit {
     this.friendData = await this.apiService.request('friend', {
       userId: this.id,
     });
-    this.friendData[0].friends.forEach((element) => {
-      this.friendList.push(element.userName);
-    });
+
+    this.friendList = this.friendData[0].friends;
+    console.log(this.friendList);
   }
 
   sendData(data): void {
+    this.friendId = data.friendId;
     this.getsetService.setValue(data);
+    this.router.navigateByUrl(`/home/chat/${this.friendId}`);
   }
 
   logout(): void {

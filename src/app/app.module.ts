@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthenticationModule } from './component/authentication/authentication.module';
-import { ChattModule } from './component/chatt/chatt.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -17,8 +15,6 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthenticationModule,
-    ChattModule,
     HttpClientModule,
     SocketIoModule.forRoot(config),
     MDBBootstrapModule,
