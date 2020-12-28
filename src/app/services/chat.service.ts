@@ -33,8 +33,7 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
-
+  }
   public getTyping = () => {
     // tslint:disable-next-line: deprecation
     return Observable.create((observer) => {
@@ -42,8 +41,7 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
-
+  }
   public noTyping = () => {
     // tslint:disable-next-line: deprecation
     return Observable.create((observer) => {
@@ -51,8 +49,7 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
-
+  }
   public onloggedIn = () => {
     // tslint:disable-next-line: deprecation
     return Observable.create((observer) => {
@@ -60,5 +57,5 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 }
