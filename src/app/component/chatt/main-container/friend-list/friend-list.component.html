@@ -14,7 +14,15 @@
                     alt="sunil"
                   />
                 </div>
-                <p class="name">{{ userName }}</p>
+                <p class="name">
+                  {{ userName }} &nbsp;<span *ngIf="online">
+                    <img
+                      src="assets/download.jpeg"
+                      style="width: 10px"
+                      alt=""
+                    />
+                  </span>
+                </p>
               </div>
             </div>
             <div class="col-md-6">

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
 import { GetsetService } from 'src/app/services/getset.service';
+import { ActivatedRoute } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
+import { fail } from 'assert';
 
 @Component({
   selector: 'app-chat-box',
@@ -9,40 +12,61 @@ import { GetsetService } from 'src/app/services/getset.service';
 })
 export class ChatBoxComponent implements OnInit {
   newMessage: string;
-  outgoingmessageList: string[] = [];
-  incomingmessageList: string[] = [];
-  data: any;
+  messageList: any[] = [];
+  friendId: any;
+  temp: any;
   check = false;
-  previousData: any = {};
+  userName: any;
 
   constructor(
     private chatService: ChatService,
-    private getsetService: GetsetService
+    private getsetService: GetsetService,
+    private activateRoute: ActivatedRoute,
+    private apiService: ApiService
   ) {}
 
   ngOnInit(): void {
-    this.chatService.getMessages().subscribe((message: string) => {
+    this.chatService.getMessages().subscribe((message: any) => {
+      this.messageList.push(message);
       console.log(message);
-      this.incomingmessageList.push(message);
-      console.log('this is incominglist', this.incomingmessageList);
     });
-    this.data = this.getsetService.getValue().userName;
-    this.previousData = this.data;
-    if (this.data === this.previousData) {
-      this.check = false;
-      this.data = this.getsetService.getValue().userName;
-      this.previousData = this.data;
-    } else {
+    this.chatService.getTyping().subscribe((message: any) => {
       this.check = true;
-    }
-
-    console.log(this.getsetService.getValue());
+    });
+    this.chatService.noTyping().subscribe((message: any) => {
+      this.check = false;
+    });
+    this.friendId = this.activateRoute.snapshot.params.id;
+    this.temp = this.friendId.split(' ');
+    this.loadMessages();
+    this.userName = this.getsetService.getValue();
   }
 
   sendMessage(): void {
-    this.chatService.sendMessage(this.newMessage);
-    this.outgoingmessageList.push(this.newMessage);
-    console.log('this is outgoing', this.outgoingmessageList);
+    const messageData = {
+      friendId: this.friendId,
+      message: this.newMessage,
+      createdOn: new Date(),
+      senderId: this.temp[0],
+      receiverId: this.temp[1],
+    };
+    this.chatService.sendMessage(messageData);
+    this.chatService.notTyping('nottyping');
+    this.messageList.push(messageData);
+    console.log('this is outgoing', this.messageList);
     this.newMessage = ' ';
+  }
+
+  async loadMessages(): Promise<void> {
+    const messageData = await this.apiService.request('getMessage', {
+      friendId: this.friendId,
+    });
+    messageData.chats.forEach((element) => {
+      this.messageList.push(element);
+    });
+  }
+
+  typing(event): void {
+    this.chatService.onTyping('typing');
   }
 }

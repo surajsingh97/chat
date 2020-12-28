@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { ApiService } from 'src/app/services/api.service';
+import { ChatService } from 'src/app/services/chat.service';
 import { GetsetService } from 'src/app/services/getset.service';
 
 @Component({
@@ -15,18 +16,26 @@ export class FriendListComponent implements OnInit {
   friendData: any;
   id: any;
   friendId: any;
+  online = false;
   constructor(
     private getsetService: GetsetService,
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
+    private chatService: ChatService
   ) {
     const token = localStorage.getItem('token');
-    const decode: any = jwt_decode(token);
-    this.userName = decode.id.userName;
-    this.id = decode.id._id;
+    if (token) {
+      const decode: any = jwt_decode(token);
+      this.userName = decode.id.userName;
+      this.getsetService.setValue(this.userName);
+      this.id = decode.id._id;
+    }
   }
 
   ngOnInit(): void {
+    if (localStorage.getItem('token')) {
+      this.online = true;
+    }
     this.loadfriendList();
   }
 
@@ -44,7 +53,6 @@ export class FriendListComponent implements OnInit {
     this.getsetService.setValue(data);
     this.router.navigateByUrl(`/home/chat/${this.friendId}`);
   }
-
   logout(): void {
     localStorage.removeItem('token');
     this.router.navigateByUrl('/login');

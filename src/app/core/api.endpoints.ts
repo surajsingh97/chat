@@ -13,6 +13,10 @@ export class ApiEndpoint {
         url: 'getFriend',
         method: 'POST',
       },
+      getMessage: {
+        url: 'show-messages',
+        method: 'POST',
+      },
     };
   }
 }

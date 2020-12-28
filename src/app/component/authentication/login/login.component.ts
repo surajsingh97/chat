@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,11 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class LoginComponent implements OnInit {
   @ViewChild('f', { static: false }) loginForm: NgForm;
-  constructor(private service: ApiService, private router: Router) {}
+  constructor(
+    private service: ApiService,
+    private router: Router,
+    private chatService: ChatService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -22,6 +27,7 @@ export class LoginComponent implements OnInit {
     console.log('this is ', formData);
     const data = await this.service.request('login', formData);
     localStorage.setItem('token', data.tok);
-    this.router.navigateByUrl('/chat');
+    this.chatService.login('online');
+    this.router.navigateByUrl('/home');
   }
 }

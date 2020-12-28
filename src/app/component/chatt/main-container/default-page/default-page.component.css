@@ -1,0 +1,11 @@
+.gretting {
+  text-align: center;
+  margin-top: 20%;
+}
+p {
+  font-size: 40px;
+  color: rgb(37, 36, 35);
+  font-family: 'SF Bold', 'Segoe System UI Bold', 'Segoe UI Bold', sans-serif;
+  font-weight: 400;
+  cursor: inherit;
+}
