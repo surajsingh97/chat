@@ -3,7 +3,6 @@ import { ChatService } from 'src/app/services/chat.service';
 import { GetsetService } from 'src/app/services/getset.service';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
-import { fail } from 'assert';
 
 @Component({
   selector: 'app-chat-box',
@@ -23,7 +22,10 @@ export class ChatBoxComponent implements OnInit {
     private getsetService: GetsetService,
     private activateRoute: ActivatedRoute,
     private apiService: ApiService
-  ) {}
+  ) {
+    this.userName = this.getsetService.getValue();
+    console.log(this.userName);
+  }
 
   ngOnInit(): void {
     this.chatService.getMessages().subscribe((message: any) => {
@@ -39,7 +41,8 @@ export class ChatBoxComponent implements OnInit {
     this.friendId = this.activateRoute.snapshot.params.id;
     this.temp = this.friendId.split(' ');
     this.loadMessages();
-    this.userName = this.getsetService.getValue();
+    
+
   }
 
   sendMessage(): void {
@@ -49,6 +52,7 @@ export class ChatBoxComponent implements OnInit {
       createdOn: new Date(),
       senderId: this.temp[0],
       receiverId: this.temp[1],
+      senderName: this.userName
     };
     this.chatService.sendMessage(messageData);
     this.chatService.notTyping('nottyping');

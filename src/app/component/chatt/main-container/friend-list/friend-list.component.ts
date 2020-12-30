@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ThrowStmt } from '@angular/compiler';
+import { Component, DoCheck, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { ApiService } from 'src/app/services/api.service';
@@ -17,6 +18,7 @@ export class FriendListComponent implements OnInit {
   id: any;
   friendId: any;
   online = false;
+
   constructor(
     private getsetService: GetsetService,
     private apiService: ApiService,
@@ -36,6 +38,7 @@ export class FriendListComponent implements OnInit {
     if (localStorage.getItem('token')) {
       this.online = true;
     }
+ 
     this.loadfriendList();
   }
 
