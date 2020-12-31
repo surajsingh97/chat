@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
 import { GetsetService } from 'src/app/services/getset.service';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-chat-box',
@@ -13,9 +14,10 @@ export class ChatBoxComponent implements OnInit {
   newMessage: string;
   messageList: any[] = [];
   friendId: any;
-  temp: any;
   check = false;
   userName: any;
+  userId: any;
+  recieverId: any;
 
   constructor(
     private chatService: ChatService,
@@ -23,8 +25,13 @@ export class ChatBoxComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private apiService: ApiService
   ) {
-    this.userName = this.getsetService.getValue();
-    console.log(this.userName);
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decode: any = jwt_decode(token);
+      this.userName = decode.id.userName;
+      this.userId = decode.id._id;
+    }
+    this.friendId = this.activateRoute.snapshot.params.id;
   }
 
   ngOnInit(): void {
@@ -38,21 +45,19 @@ export class ChatBoxComponent implements OnInit {
     this.chatService.noTyping().subscribe((message: any) => {
       this.check = false;
     });
-    this.friendId = this.activateRoute.snapshot.params.id;
-    this.temp = this.friendId.split(' ');
+    this.checkId();
     this.loadMessages();
-    
-
   }
 
+ 
   sendMessage(): void {
     const messageData = {
       friendId: this.friendId,
       message: this.newMessage,
       createdOn: new Date(),
-      senderId: this.temp[0],
-      receiverId: this.temp[1],
-      senderName: this.userName
+      senderId: this.userId,
+      receiverId: this.recieverId,
+      senderName: this.userName,
     };
     this.chatService.sendMessage(messageData);
     this.chatService.notTyping('nottyping');
@@ -65,6 +70,7 @@ export class ChatBoxComponent implements OnInit {
     const messageData = await this.apiService.request('getMessage', {
       friendId: this.friendId,
     });
+    console.log(messageData);
     messageData.chats.forEach((element) => {
       this.messageList.push(element);
     });
@@ -72,5 +78,14 @@ export class ChatBoxComponent implements OnInit {
 
   typing(event): void {
     this.chatService.onTyping('typing');
+  }
+
+  checkId(): void{
+    const temp = this.friendId.split(' ');
+    temp.forEach(element => {
+      if (element !== this.userId){
+          this.recieverId = element;
+      }
+    });
   }
 }

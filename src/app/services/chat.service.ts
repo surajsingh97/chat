@@ -34,6 +34,7 @@ export class ChatService {
       });
     });
   }
+
   public getTyping = () => {
     // tslint:disable-next-line: deprecation
     return Observable.create((observer) => {
@@ -42,6 +43,7 @@ export class ChatService {
       });
     });
   }
+
   public noTyping = () => {
     // tslint:disable-next-line: deprecation
     return Observable.create((observer) => {
@@ -50,6 +52,7 @@ export class ChatService {
       });
     });
   }
+
   public onloggedIn = () => {
     // tslint:disable-next-line: deprecation
     return Observable.create((observer) => {
@@ -59,3 +62,4 @@ export class ChatService {
     });
   }
 }
+

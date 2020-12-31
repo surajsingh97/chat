@@ -1,22 +1,33 @@
-<div class="mesgs" >
-
-  <div class="msg_history" >
+<div class="mesgs">
+  <div class="msg_history">
     <!-- ----------------------------------chat box------------------------------------------------- -->
     <div class="div" *ngFor="let messages of messageList">
-    <div [ngClass]="messages.senderName==userName?'outgoing_msg':'incoming_msg'">
-      <!-- <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div> -->
-      <div [ngClass]="messages.senderName==userName?'sent_msg':'received_msg'">
-        <div class="received_withd_msg">
-          <span style="font-size:10px;">{{messages.senderName}}</span>
-          <p>{{ messages.message }}</p>
-          <span class="time_date">{{ messages.createdOn | date: 'medium' }}</span></div>
+      <div
+        [ngClass]="
+          messages.senderName == userName ? 'outgoing_msg' : 'incoming_msg'
+        "
+      >
+        <div
+          [ngClass]="
+            messages.senderName == userName ? 'sent_msg' : 'received_msg'
+          "
+        >
+          <div class="received_withd_msg">
+
+        <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>&nbsp;
+            <span style="font-size: 12px;font-family:'Times New Roman', Times, serif">{{ messages.senderName }}</span>
+            <p style="margin-top: 6px;">{{ messages.message }}</p>
+            <span class="time_date">{{
+              messages.createdOn | date: 'medium'
+            }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  </div>
   <div class="typing">
     <p *ngIf="check">typing.....</p>
-  </div>  
+  </div>
   <div class="type_msg">
     <div class="input_msg_write">
       <input

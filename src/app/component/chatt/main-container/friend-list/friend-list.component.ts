@@ -12,12 +12,14 @@ import { GetsetService } from 'src/app/services/getset.service';
   styleUrls: ['./friend-list.component.css'],
 })
 export class FriendListComponent implements OnInit {
-  friendList: any;
+  friendList: any = [];
   userName: string;
   friendData: any;
   id: any;
   friendId: any;
   online = false;
+  searchText: any;
+  error: any;
 
   constructor(
     private getsetService: GetsetService,
@@ -38,17 +40,17 @@ export class FriendListComponent implements OnInit {
     if (localStorage.getItem('token')) {
       this.online = true;
     }
- 
     this.loadfriendList();
   }
+
 
   async loadfriendList(): Promise<void> {
     this.friendData = await this.apiService.request('friend', {
       userId: this.id,
     });
-
-    this.friendList = this.friendData[0].friends;
-    console.log(this.friendList);
+    this.friendData.result.friends.forEach(element => {
+      this.friendList.push(element);
+    });
   }
 
   sendData(data): void {
@@ -56,6 +58,26 @@ export class FriendListComponent implements OnInit {
     this.getsetService.setValue(data);
     this.router.navigateByUrl(`/home/chat/${this.friendId}`);
   }
+
+  addFriend(): any {
+    this.apiService.request('addFriend', {
+      userName: this.searchText
+    }).then((data) => {
+      if (data.result === 'Added Successfully!') {
+        this.friendList.push({
+          userName: this.searchText
+        });
+        console.log(this.friendList);
+        this.error = data.result;
+      } else if (data.result === 'Already Exists in friend list!!') {
+        this.error = data.result;
+      } else {
+        this.error = 'User Not Found!!';
+      }
+    });
+
+  }
+
   logout(): void {
     localStorage.removeItem('token');
     this.router.navigateByUrl('/login');

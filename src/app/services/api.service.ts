@@ -44,7 +44,8 @@ export class ApiService {
             resolve(JSON.parse(JSON.stringify(res)));
           },
           (err) => {
-            reject(err);
+            console.log(err);
+            reject(JSON.parse(JSON.stringify(err)));
           }
         );
     });
