@@ -16,7 +16,7 @@ export class GetsetService {
     return this.Data;
   }
 
-  getToken(): any{
+  getToken(): any {
     return localStorage.getItem('token');
   }
 }

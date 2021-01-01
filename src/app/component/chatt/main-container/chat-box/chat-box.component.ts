@@ -31,7 +31,6 @@ export class ChatBoxComponent implements OnInit {
       this.userName = decode.id.userName;
       this.userId = decode.id._id;
     }
-    this.friendId = this.activateRoute.snapshot.params.id;
   }
 
   ngOnInit(): void {
@@ -45,11 +44,13 @@ export class ChatBoxComponent implements OnInit {
     this.chatService.noTyping().subscribe((message: any) => {
       this.check = false;
     });
+    this.activateRoute.params.subscribe(routeParams => {
+      this.loadMessages(routeParams.id);
+    });
+  
     this.checkId();
-    this.loadMessages();
   }
 
- 
   sendMessage(): void {
     const messageData = {
       friendId: this.friendId,
@@ -62,15 +63,15 @@ export class ChatBoxComponent implements OnInit {
     this.chatService.sendMessage(messageData);
     this.chatService.notTyping('nottyping');
     this.messageList.push(messageData);
-    console.log('this is outgoing', this.messageList);
+    console.log('this is incoming', this.messageList);
     this.newMessage = ' ';
   }
 
-  async loadMessages(): Promise<void> {
+  async loadMessages(params): Promise<void> {
     const messageData = await this.apiService.request('getMessage', {
-      friendId: this.friendId,
+      friendId: params,
     });
-    console.log(messageData);
+    this.messageList = [];
     messageData.chats.forEach((element) => {
       this.messageList.push(element);
     });
@@ -80,11 +81,11 @@ export class ChatBoxComponent implements OnInit {
     this.chatService.onTyping('typing');
   }
 
-  checkId(): void{
-    const temp = this.friendId.split(' ');
-    temp.forEach(element => {
-      if (element !== this.userId){
-          this.recieverId = element;
+  checkId(): void {
+    const temp =  this.activateRoute.snapshot.params.id.split(' ');
+    temp.forEach((element) => {
+      if (element !== this.userId) {
+        this.recieverId = element;
       }
     });
   }

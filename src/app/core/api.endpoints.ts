@@ -19,8 +19,8 @@ export class ApiEndpoint {
       },
       addFriend: {
         url: 'Add',
-        method: 'POST'
-      }
+        method: 'POST',
+      },
     };
   }
 }

@@ -13,10 +13,21 @@
           "
         >
           <div class="received_withd_msg">
-
-        <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>&nbsp;
-            <span style="font-size: 12px;font-family:'Times New Roman', Times, serif">{{ messages.senderName }}</span>
-            <p style="margin-top: 6px;">{{ messages.message }}</p>
+            <div class="incoming_msg_img">
+              <img
+                src="https://ptetutorials.com/images/user-profile.png"
+                alt="sunil"
+              />
+            </div>
+            &nbsp;
+            <span
+              style="
+                font-size: 12px;
+                font-family: 'Times New Roman', Times, serif;
+              "
+              >{{ messages.senderName }}</span
+            >
+            <p style="margin-top: 6px">{{ messages.message }}</p>
             <span class="time_date">{{
               messages.createdOn | date: 'medium'
             }}</span>

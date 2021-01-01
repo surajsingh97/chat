@@ -40,13 +40,27 @@
         </div>
         <hr />
         <div class="srch_bar">
-          <div style="border-radius: 20px;" class="search-hero">
-            <input class="form-control " type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="people">
-            <p  style="color: red;margin-top: 5px;">{{error}}</p>
-            <button style="margin-top: 10px;" class="btn btn-md btn-success" type="submit" (click)="addFriend()">Add</button>
+          <div style="border-radius: 20px" class="search-hero">
+            <input
+              class="form-control"
+              type="text"
+              name="search"
+              [(ngModel)]="searchText"
+              autocomplete="off"
+              placeholder="people"
+            />
+            <p style="color: red; margin-top: 5px">{{ error }}</p>
+            <button
+              style="margin-top: 10px"
+              class="btn btn-md btn-success"
+              type="submit"
+              (click)="addFriend()"
+            >
+              Add
+            </button>
           </div>
         </div>
-        <hr>
+        <hr />
         <div class="headind_srch">
           <div class="recent_heading">
             <h4>
@@ -70,8 +84,8 @@
                   />
                 </div>
                 <div class="chat_ib">
-                  <h5 style="font-family:'Times New Roman', Times, serif">
-                    {{ friends.userName}} <span class="chat_date">Dec 25</span>
+                  <h5 style="font-family: 'Times New Roman', Times, serif">
+                    {{ friends.userName }} <span class="chat_date">Dec 25</span>
                   </h5>
                   <!-- <p>{{ lastMessage }}</p> -->
                 </div></a
