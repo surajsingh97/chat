@@ -36,7 +36,6 @@ export class FriendListComponent implements OnInit {
       this.getsetService.setValue(this.userName);
       this.id = decode.id._id;
     }
-
   }
 
   ngOnInit(): void {
@@ -63,8 +62,6 @@ export class FriendListComponent implements OnInit {
     console.log(this.friendList);
     console.log(this.activeUser);
     // tslint:disable-next-line: prefer-for-of
-  
-  
   }
 
   sendData(data): void {
@@ -92,13 +89,13 @@ export class FriendListComponent implements OnInit {
         }
       });
   }
-  
-  checkOnline(): any{
+
+  checkOnline(): any {
     // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < this.friendList.length ; i++) {
-      if (this.activeUser.indexOf(this.friendList[i].userName) > -1){
+    for (let i = 0; i < this.friendList.length; i++) {
+      if (this.activeUser.indexOf(this.friendList[i].userName) > -1) {
         return 'online';
-      }else{
+      } else {
         return 'ofline';
       }
     }

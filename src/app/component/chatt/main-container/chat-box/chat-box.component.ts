@@ -53,19 +53,19 @@ export class ChatBoxComponent implements OnInit {
     this.checkId();
   }
 
- onSubmit(form: NgForm): void {
-   const messageData = {
-      friendId:  this.activateRoute.snapshot.params.id,
+  onSubmit(form: NgForm): void {
+    const messageData = {
+      friendId: this.activateRoute.snapshot.params.id,
       message: form.value.msg,
       createdOn: new Date(),
       senderId: this.userId,
-      receiverId: this.recieverId,  
+      receiverId: this.recieverId,
       senderName: this.userName,
     };
-   this.chatService.sendMessage(messageData);
-   this.chatService.notTyping('nottyping');
-   this.messageList.push(messageData);
-   this.messageForm.reset();
+    this.chatService.sendMessage(messageData);
+    this.chatService.notTyping('nottyping');
+    this.messageList.push(messageData);
+    this.messageForm.reset();
   }
 
   async loadMessages(params): Promise<void> {
