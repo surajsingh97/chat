@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
 import { GetsetService } from 'src/app/services/getset.service';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import jwt_decode from 'jwt-decode';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-chat-box',
@@ -11,13 +12,14 @@ import jwt_decode from 'jwt-decode';
   styleUrls: ['./chat-box.component.css'],
 })
 export class ChatBoxComponent implements OnInit {
-  newMessage: string;
+  @ViewChild('f', { static: false }) messageForm: NgForm;
+
   messageList: any[] = [];
-  friendId: any;
   check = false;
   userName: any;
   userId: any;
   recieverId: any;
+  show = false;
 
   constructor(
     private chatService: ChatService,
@@ -44,27 +46,26 @@ export class ChatBoxComponent implements OnInit {
     this.chatService.noTyping().subscribe((message: any) => {
       this.check = false;
     });
-    this.activateRoute.params.subscribe(routeParams => {
+    this.activateRoute.params.subscribe((routeParams) => {
       this.loadMessages(routeParams.id);
     });
-  
+
     this.checkId();
   }
 
-  sendMessage(): void {
-    const messageData = {
-      friendId: this.friendId,
-      message: this.newMessage,
+ onSubmit(form: NgForm): void {
+   const messageData = {
+      friendId:  this.activateRoute.snapshot.params.id,
+      message: form.value.msg,
       createdOn: new Date(),
       senderId: this.userId,
-      receiverId: this.recieverId,
+      receiverId: this.recieverId,  
       senderName: this.userName,
     };
-    this.chatService.sendMessage(messageData);
-    this.chatService.notTyping('nottyping');
-    this.messageList.push(messageData);
-    console.log('this is incoming', this.messageList);
-    this.newMessage = ' ';
+   this.chatService.sendMessage(messageData);
+   this.chatService.notTyping('nottyping');
+   this.messageList.push(messageData);
+   this.messageForm.reset();
   }
 
   async loadMessages(params): Promise<void> {
@@ -82,7 +83,7 @@ export class ChatBoxComponent implements OnInit {
   }
 
   checkId(): void {
-    const temp =  this.activateRoute.snapshot.params.id.split(' ');
+    const temp = this.activateRoute.snapshot.params.id.split(' ');
     temp.forEach((element) => {
       if (element !== this.userId) {
         this.recieverId = element;

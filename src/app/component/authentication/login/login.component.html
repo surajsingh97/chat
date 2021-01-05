@@ -17,18 +17,18 @@
             style="border-radius: 25px"
             class="input100 form-control"
             type="text"
-            name="email"
-            placeholder="Email"
+            name="username"
+            placeholder="Username"
             ngModel
             required
-            email
-            #email="ngModel"
+            username
+            #username="ngModel"
           />
           <span class="focus-input100"></span>
           <span
             style="font-size: 10px; margin-left: 15px"
             class="help-block"
-            *ngIf="!email.valid && email.touched"
+            *ngIf="!username.valid && username.touched"
             >*Please enter a valid email!</span
           >
         </div>

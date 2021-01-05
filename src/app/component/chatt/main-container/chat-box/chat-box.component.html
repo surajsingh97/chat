@@ -37,24 +37,33 @@
     </div>
   </div>
   <div class="typing">
-    <p *ngIf="check">typing.....</p>
+    <p *ngIf="check">someone is typing….</p>
   </div>
   <div class="type_msg">
     <div class="input_msg_write">
+      <form
+      class="login100-form validate-form"
+      (ngSubmit)="onSubmit(f)"
+      #f="ngForm"
+    >
       <input
         type="text"
         class="write_msg"
         placeholder="Type a message"
-        [(ngModel)]="newMessage"
+        name="msg"
+        ngModel
+        required
+        msg
+        #msg="ngModel"
         (keyup)="typing($event.target.value)"
       />
       <button class="msg_send_btn" type="button">
         <i
           class="fa fa-paper-plane-o"
           aria-hidden="true"
-          (click)="sendMessage()"
         ></i>
       </button>
+      </form>
     </div>
   </div>
 </div>

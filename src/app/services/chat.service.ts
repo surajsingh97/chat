@@ -33,7 +33,7 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 
   public getTyping = () => {
     // tslint:disable-next-line: deprecation
@@ -42,7 +42,7 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 
   public noTyping = () => {
     // tslint:disable-next-line: deprecation
@@ -51,14 +51,14 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 
-  public onloggedIn = () => {
+  public onlogIn = () => {
     // tslint:disable-next-line: deprecation
     return Observable.create((observer) => {
-      this.socket.on('onlogin', (message) => {
+      this.socket.on('login', (message) => {
         observer.next(message);
       });
     });
-  };
+  }
 }

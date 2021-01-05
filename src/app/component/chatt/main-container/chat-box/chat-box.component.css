@@ -101,7 +101,7 @@ img {
 
 .incoming_msg_img {
   display: inline-block;
-  width: 15%;
+  width: 11%;
 }
 .received_msg {
   display: inline-block;
@@ -116,7 +116,7 @@ img {
   font-size: 14px;
   margin: 0;
   padding: 5px 10px 5px 12px;
-  width: 100%;
+  width: 80%;
 }
 .time_date {
   color: #747474;

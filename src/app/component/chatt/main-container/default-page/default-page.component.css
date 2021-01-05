@@ -9,3 +9,7 @@ p {
   font-weight: 400;
   cursor: inherit;
 }
+img {
+  width: 15%;
+  height: 30%;
+}

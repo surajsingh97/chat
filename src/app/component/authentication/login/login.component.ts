@@ -20,14 +20,14 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   async onSubmit(form: NgForm): Promise<void> {
+    console.log(form);
     const formData = {
-      email: form.value.email,
+      email: form.value.username,
       password: form.value.password,
     };
-    console.log('this is ', formData);
     const data = await this.service.request('login', formData);
     localStorage.setItem('token', data.tok);
-    this.chatService.login('online');
+    this.chatService.login(form.value.username);
     this.router.navigateByUrl('/home');
   }
 }

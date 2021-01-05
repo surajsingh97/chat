@@ -45,6 +45,12 @@ img {
   font-size: 15px;
   margin: auto;
 }
+.online {
+  color: green;
+}
+.ofline {
+  color: red;
+}
 .srch_bar input {
   border: 1px solid #cdcdcd;
   border-width: 0 0 1px 0;

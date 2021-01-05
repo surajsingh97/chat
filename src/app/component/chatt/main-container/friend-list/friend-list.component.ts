@@ -1,5 +1,6 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Component, DoCheck, OnChanges, OnInit } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { ApiService } from 'src/app/services/api.service';
@@ -20,6 +21,7 @@ export class FriendListComponent implements OnInit {
   online = false;
   searchText: any;
   error: any;
+  activeUser: any = [];
 
   constructor(
     private getsetService: GetsetService,
@@ -34,13 +36,20 @@ export class FriendListComponent implements OnInit {
       this.getsetService.setValue(this.userName);
       this.id = decode.id._id;
     }
+
   }
 
   ngOnInit(): void {
     if (localStorage.getItem('token')) {
       this.online = true;
     }
+    this.chatService.onlogIn().subscribe((message: any) => {
+      this.activeUser = message;
+      console.log(this.activeUser);
+    });
+    console.log(this.activeUser);
     this.loadfriendList();
+    // this.checkOnline();
   }
 
   async loadfriendList(): Promise<void> {
@@ -50,6 +59,12 @@ export class FriendListComponent implements OnInit {
     this.friendData.result.friends.forEach((element) => {
       this.friendList.push(element);
     });
+    console.log('im running');
+    console.log(this.friendList);
+    console.log(this.activeUser);
+    // tslint:disable-next-line: prefer-for-of
+  
+  
   }
 
   sendData(data): void {
@@ -76,6 +91,17 @@ export class FriendListComponent implements OnInit {
           this.error = 'User Not Found!!';
         }
       });
+  }
+  
+  checkOnline(): any{
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.friendList.length ; i++) {
+      if (this.activeUser.indexOf(this.friendList[i].userName) > -1){
+        return 'online';
+      }else{
+        return 'ofline';
+      }
+    }
   }
 
   logout(): void {

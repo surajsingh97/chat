@@ -16,7 +16,6 @@ export class ApiService {
     payload?: any,
     { paramsData = [], clearCache = false } = {}
   ): Promise<any> {
-    console.log('inside');
     const endPointData = ApiEndpoint.data()[endPointName];
     if (!endPointData) {
       alert('Api path is not found');
@@ -40,11 +39,9 @@ export class ApiService {
         )
         .subscribe(
           (res) => {
-            console.log(res);
             resolve(JSON.parse(JSON.stringify(res)));
           },
           (err) => {
-            console.log(err);
             reject(JSON.parse(JSON.stringify(err)));
           }
         );
