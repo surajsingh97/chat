@@ -1,6 +1,5 @@
-import { ThrowStmt } from '@angular/compiler';
-import { Component, DoCheck, OnChanges, OnInit } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { collectExternalReferences } from '@angular/compiler';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { ApiService } from 'src/app/services/api.service';
@@ -42,13 +41,14 @@ export class FriendListComponent implements OnInit {
     if (localStorage.getItem('token')) {
       this.online = true;
     }
-    this.chatService.onlogIn().subscribe((message: any) => {
-      this.activeUser = message;
-      console.log(this.activeUser);
-    });
-    console.log(this.activeUser);
+    this.chatService.getUser('user');
+    this.loadactiveUser();
     this.loadfriendList();
-    // this.checkOnline();
+    this.chatService.onlogOut().subscribe((message: any) => {
+      this.activeUser = this.activeUser.filter((user) => {
+        return user !== message;
+    });
+    });
   }
 
   async loadfriendList(): Promise<void> {
@@ -58,14 +58,22 @@ export class FriendListComponent implements OnInit {
     this.friendData.result.friends.forEach((element) => {
       this.friendList.push(element);
     });
-    console.log('im running');
-    console.log(this.friendList);
-    console.log(this.activeUser);
-    // tslint:disable-next-line: prefer-for-of
+  }
+
+  loadactiveUser(): void {
+    this.chatService.onlogIn().subscribe((message: any) => {
+      // tslint:disable-next-line: prefer-for-of
+      for (let i = 0; i < message.length; i++) {
+        if (this.activeUser.indexOf(message[i].userName) === -1){
+          this.activeUser.push(message[i].userName);
+        }
+      }
+    });
   }
 
   sendData(data): void {
     this.friendId = data.friendId;
+    this.chatService.joinedChat({ userName: this.userName, id: this.friendId });
     this.getsetService.setValue(data);
     this.router.navigateByUrl(`/home/chat/${this.friendId}`);
   }
@@ -90,10 +98,10 @@ export class FriendListComponent implements OnInit {
       });
   }
 
-  checkOnline(): any {
+  checkOnline(name): any {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.friendList.length; i++) {
-      if (this.activeUser.indexOf(this.friendList[i].userName) > -1) {
+      if (this.activeUser.indexOf(name) > -1) {
         return 'online';
       } else {
         return 'ofline';
@@ -102,6 +110,7 @@ export class FriendListComponent implements OnInit {
   }
 
   logout(): void {
+    this.chatService.sendLogout(this.userName);
     localStorage.removeItem('token');
     this.router.navigateByUrl('/login');
   }

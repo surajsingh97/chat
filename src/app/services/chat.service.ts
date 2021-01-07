@@ -26,6 +26,18 @@ export class ChatService {
     this.socket.emit('onlogin', msg);
   }
 
+  sendLogout(msg): void {
+    this.socket.emit('onlogout', msg);
+  }
+
+  joinedChat(msg: any): void {
+    this.socket.emit('joined', msg);
+  }
+
+  getUser(msg: any): void{
+    this.socket.emit('user', msg);
+  }
+
   public getMessages = () => {
     // tslint:disable-next-line: deprecation
     return Observable.create((observer) => {
@@ -33,7 +45,7 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 
   public getTyping = () => {
     // tslint:disable-next-line: deprecation
@@ -42,7 +54,7 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 
   public noTyping = () => {
     // tslint:disable-next-line: deprecation
@@ -51,14 +63,23 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 
   public onlogIn = () => {
     // tslint:disable-next-line: deprecation
     return Observable.create((observer) => {
-      this.socket.on('login', (message) => {
+      this.socket.on('login', (message: any) => {
         observer.next(message);
       });
     });
-  };
+  }
+
+  public onlogOut = () => {
+    // tslint:disable-next-line: deprecation
+    return Observable.create((observer) => {
+      this.socket.on('logout', (message: any) => {
+        observer.next(message);
+      });
+    });
+  }
 }
