@@ -51,6 +51,9 @@ img {
 .ofline {
   color: red;
 }
+.primary {
+  background-color: lightblue;
+}
 .srch_bar input {
   border: 1px solid #cdcdcd;
   border-width: 0 0 1px 0;
@@ -98,7 +101,6 @@ img {
   clear: both;
 }
 .chat_list {
-  border-bottom: 1px solid #c4c4c4;
   margin: 0;
   padding: 18px 16px 10px;
 }

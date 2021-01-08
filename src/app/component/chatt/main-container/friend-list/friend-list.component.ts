@@ -21,6 +21,7 @@ export class FriendListComponent implements OnInit {
   searchText: any;
   error: any;
   activeUser: any = [];
+  flag;
 
   constructor(
     private getsetService: GetsetService,
@@ -47,7 +48,7 @@ export class FriendListComponent implements OnInit {
     this.chatService.onlogOut().subscribe((message: any) => {
       this.activeUser = this.activeUser.filter((user) => {
         return user !== message;
-    });
+      });
     });
   }
 
@@ -64,14 +65,16 @@ export class FriendListComponent implements OnInit {
     this.chatService.onlogIn().subscribe((message: any) => {
       // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < message.length; i++) {
-        if (this.activeUser.indexOf(message[i].userName) === -1){
+        if (this.activeUser.indexOf(message[i].userName) === -1) {
           this.activeUser.push(message[i].userName);
         }
       }
     });
   }
 
-  sendData(data): void {
+  sendData(data, i): void {
+    this.flag = i;
+    console.log(this.flag);
     this.friendId = data.friendId;
     this.chatService.joinedChat({ userName: this.userName, id: this.friendId });
     this.getsetService.setValue(data);
