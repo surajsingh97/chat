@@ -2,6 +2,7 @@ import { collectExternalReferences } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { ApiService } from 'src/app/services/api.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { GetsetService } from 'src/app/services/getset.service';
@@ -45,17 +46,21 @@ export class FriendListComponent implements OnInit {
     this.chatService.getUser('user');
     this.loadactiveUser();
     this.loadfriendList();
+    this.getAll();
     this.chatService.onlogOut().subscribe((message: any) => {
       this.activeUser = this.activeUser.filter((user) => {
         return user !== message;
       });
     });
-  }
+    this.chatService.notification().subscribe((message: any) => {
+      console.log('this is all', message);
+    });  }
 
   async loadfriendList(): Promise<void> {
     this.friendData = await this.apiService.request('friend', {
       userId: this.id,
     });
+    console.log(this.friendData);
     this.friendData.result.friends.forEach((element) => {
       this.friendList.push(element);
     });
@@ -71,12 +76,13 @@ export class FriendListComponent implements OnInit {
       }
     });
   }
+  
 
   sendData(data, i): void {
     this.flag = i;
     console.log(this.flag);
     this.friendId = data.friendId;
-    this.chatService.joinedChat({ userName: this.userName, id: this.friendId });
+    this.chatService.joinedChat({id: this.friendId });
     this.getsetService.setValue(data);
     this.router.navigateByUrl(`/home/chat/${this.friendId}`);
   }
@@ -112,6 +118,10 @@ export class FriendListComponent implements OnInit {
     }
   }
 
+  async getAll(): Promise<void> {
+    const data = await this.apiService.request('getAll');
+    // console.log(data);
+  }
   logout(): void {
     this.chatService.sendLogout(this.userName);
     localStorage.removeItem('token');

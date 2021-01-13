@@ -38,6 +38,10 @@ export class ChatService {
     this.socket.emit('user', msg);
   }
 
+  getlatMessage(msg: any): void {
+    this.socket.emit('getlastMessage', msg);
+  }
+
   public getMessages = () => {
     // tslint:disable-next-line: deprecation
     return Observable.create((observer) => {
@@ -45,7 +49,7 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 
   public getTyping = () => {
     // tslint:disable-next-line: deprecation
@@ -54,7 +58,7 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 
   public noTyping = () => {
     // tslint:disable-next-line: deprecation
@@ -63,7 +67,7 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 
   public onlogIn = () => {
     // tslint:disable-next-line: deprecation
@@ -72,7 +76,7 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 
   public onlogOut = () => {
     // tslint:disable-next-line: deprecation
@@ -81,5 +85,14 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
+
+  public notification = () => {
+    // tslint:disable-next-line: deprecation
+    return Observable.create((observer) => {
+      this.socket.on('notify', (message: any) => {
+        observer.next(message);
+      });
+    });
+  }
 }

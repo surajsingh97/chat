@@ -25,6 +25,10 @@ export class ApiEndpoint {
         url: 'online',
         method: 'POST',
       },
+      getAll: {
+        url: 'getAll',
+        method: 'POST',
+      }
     };
   }
 }
