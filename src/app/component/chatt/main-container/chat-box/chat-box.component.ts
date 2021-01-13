@@ -14,7 +14,7 @@ import { NgForm } from '@angular/forms';
 export class ChatBoxComponent implements OnInit {
   @ViewChild('f', { static: false }) messageForm: NgForm;
 
-  public  messageList: any[] = [];
+  public messageList: any[] = [];
   public check = false;
   public userName: any;
   public userId: any;
@@ -79,7 +79,7 @@ export class ChatBoxComponent implements OnInit {
     });
   }
 
-   typing(event): void {
+  typing(event): void {
     this.chatService.onTyping('typing');
   }
 

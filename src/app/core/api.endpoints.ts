@@ -28,7 +28,7 @@ export class ApiEndpoint {
       getAll: {
         url: 'getAll',
         method: 'POST',
-      }
+      },
     };
   }
 }

@@ -54,7 +54,8 @@ export class FriendListComponent implements OnInit {
     });
     this.chatService.notification().subscribe((message: any) => {
       console.log('this is all', message);
-    });  }
+    });
+  }
 
   async loadfriendList(): Promise<void> {
     this.friendData = await this.apiService.request('friend', {
@@ -76,13 +77,12 @@ export class FriendListComponent implements OnInit {
       }
     });
   }
-  
 
   sendData(data, i): void {
     this.flag = i;
     console.log(this.flag);
     this.friendId = data.friendId;
-    this.chatService.joinedChat({id: this.friendId });
+    this.chatService.joinedChat({ id: this.friendId });
     this.getsetService.setValue(data);
     this.router.navigateByUrl(`/home/chat/${this.friendId}`);
   }
