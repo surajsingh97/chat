@@ -13,16 +13,17 @@ import { GetsetService } from 'src/app/services/getset.service';
   styleUrls: ['./friend-list.component.css'],
 })
 export class FriendListComponent implements OnInit {
-  friendList: any = [];
-  userName: string;
-  friendData: any;
-  id: any;
-  friendId: any;
-  online = false;
-  searchText: any;
-  error: any;
-  activeUser: any = [];
-  flag;
+  public friendList: any = [];
+  public lastMessageData: any = [];
+  public userName: string;
+  public  friendData: any;
+  public  id: any;
+  public  friendId: any;
+  public   online = false;
+  public  searchText: any;
+  public  error: any;
+  public   activeUser: any = [];
+  public   flag;
 
   constructor(
     private getsetService: GetsetService,
@@ -48,21 +49,21 @@ export class FriendListComponent implements OnInit {
     this.loadfriendList();
     this.getAll();
     this.chatService.onlogOut().subscribe((message: any) => {
-      this.activeUser = this.activeUser.filter((user) => {
+      this.activeUser = this.activeUser?.filter((user) => {
         return user !== message;
       });
     });
     this.chatService.notification().subscribe((message: any) => {
-      console.log('this is all', message);
+      this.lastMessageData = message;
     });
+   
   }
 
   async loadfriendList(): Promise<void> {
     this.friendData = await this.apiService.request('friend', {
       userId: this.id,
     });
-    console.log(this.friendData);
-    this.friendData.result.friends.forEach((element) => {
+    this.friendData?.result.friends.forEach((element) => {
       this.friendList.push(element);
     });
   }
@@ -80,7 +81,6 @@ export class FriendListComponent implements OnInit {
 
   sendData(data, i): void {
     this.flag = i;
-    console.log(this.flag);
     this.friendId = data.friendId;
     this.chatService.joinedChat({ id: this.friendId });
     this.getsetService.setValue(data);
@@ -97,7 +97,6 @@ export class FriendListComponent implements OnInit {
           this.friendList.push({
             userName: this.searchText,
           });
-          console.log(this.friendList);
           this.error = data.result;
         } else if (data.result === 'Already Exists in friend list!!') {
           this.error = data.result;
@@ -119,12 +118,18 @@ export class FriendListComponent implements OnInit {
   }
 
   async getAll(): Promise<void> {
-    const data = await this.apiService.request('getAll');
-    // console.log(data);
+    this.lastMessageData = await this.apiService.request('getAll');
+    this.lastMessageData.sort((a, b) => {
+      return   new Date(b.chats[0].createdOn).valueOf() - new Date(a.chats[0].createdOn).valueOf();
+    });
   }
+
   logout(): void {
     this.chatService.sendLogout(this.userName);
     localStorage.removeItem('token');
     this.router.navigateByUrl('/login');
   }
+
+
 }
+

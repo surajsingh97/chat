@@ -15,7 +15,6 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {}
 
   async onSubmit(form: NgForm): Promise<void> {
-    console.log(form);
     const formdata = {
       userName: form.value.username,
       email: form.value.email,

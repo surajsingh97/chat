@@ -70,8 +70,10 @@
         </div>
         <div class="inbox_chat">
           <!-- ----------------------------------friend List------------------------------------------------- -->
-          <div class="chat_list" *ngFor="let friends of friendList; index as i">
-            <div class="big" [ngClass]="flag == i ? 'primary' : ' '">
+          <div  *ngFor="let friends of friendList; index as i">
+            
+          <div class="chat_list" [ngClass]="flag == i ? 'primary' : ' '">
+            <div class="big" >
               <div class="chat_people">
                 <br />
                 <div>
@@ -94,10 +96,10 @@
                           style="font-size: 10px; margin-left: 5px"
                           [ngClass]="checkOnline(friends.userName)"
                         ></i>
-                        <span class="chat_date"
-                          ><span
-                            ><span>Dec 25</span>
-                            <p>lastMessage</p></span
+                        <span *ngFor="let messages of lastMessageData "class="chat_date"
+                          ><span *ngIf="friends.friendId === messages.friendId"
+                            ><span>{{messages.chats[0].createdOn | date: 'shortTime'}}</span>
+                            <p>{{messages.chats[0].message}}</p></span
                           ></span
                         >
                       </h5>
@@ -106,6 +108,7 @@
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

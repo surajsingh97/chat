@@ -7,7 +7,7 @@ import jwt_decode from 'jwt-decode';
   styleUrls: ['./default-page.component.css'],
 })
 export class DefaultPageComponent implements OnInit {
-  userName: any;
+  public  userName: any;
 
   constructor() {}
 

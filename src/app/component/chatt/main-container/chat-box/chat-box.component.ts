@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import jwt_decode from 'jwt-decode';
 import { NgForm } from '@angular/forms';
+import { ToasterServiceService } from 'src/app/toaster-service.service';
 
 @Component({
   selector: 'app-chat-box',
@@ -25,7 +26,8 @@ export class ChatBoxComponent implements OnInit {
     private chatService: ChatService,
     private getsetService: GetsetService,
     private activateRoute: ActivatedRoute,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private toaster: ToasterServiceService
   ) {
     const token = localStorage.getItem('token');
     if (token) {
@@ -38,7 +40,7 @@ export class ChatBoxComponent implements OnInit {
   ngOnInit(): void {
     this.chatService.getMessages().subscribe((message: any) => {
       this.messageList.push(message);
-      console.log(message);
+      this.toaster.showToaster(message.message);
     });
     this.chatService.getTyping().subscribe((message: any) => {
       this.check = true;
@@ -49,7 +51,6 @@ export class ChatBoxComponent implements OnInit {
     this.activateRoute.params.subscribe((routeParams) => {
       this.loadMessages(routeParams.id);
     });
-
     this.checkId();
   }
 
@@ -63,10 +64,10 @@ export class ChatBoxComponent implements OnInit {
       senderName: this.userName,
     };
     this.chatService.sendMessage(messageData);
-    this.chatService.getlatMessage(this.userId);
-    this.chatService.notTyping('nottyping');
+    this.chatService.notTyping( this.activateRoute.snapshot.params.id);
     this.messageList.push(messageData);
     this.messageForm.reset();
+    this.chatService.getlatMessage();
   }
 
   async loadMessages(params): Promise<void> {
@@ -74,13 +75,13 @@ export class ChatBoxComponent implements OnInit {
       friendId: params,
     });
     this.messageList = [];
-    messageData.chats.forEach((element) => {
+    messageData?.chats.forEach((element) => {
       this.messageList.push(element);
     });
   }
 
-  typing(event): void {
-    this.chatService.onTyping('typing');
+  typing(): void {
+    this.chatService.onTyping( this.activateRoute.snapshot.params.id);
   }
 
   checkId(): void {
@@ -91,4 +92,6 @@ export class ChatBoxComponent implements OnInit {
       }
     });
   }
+
+  
 }

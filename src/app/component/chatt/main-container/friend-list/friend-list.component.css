@@ -52,7 +52,7 @@ img {
   color: red;
 }
 .primary {
-  background-color: lightblue;
+  background-color: rgb(197, 218, 218);
 }
 .srch_bar input {
   border: 1px solid #cdcdcd;

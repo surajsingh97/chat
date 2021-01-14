@@ -20,7 +20,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   async onSubmit(form: NgForm): Promise<void> {
-    console.log(form);
     const formData = {
       email: form.value.username,
       password: form.value.password,

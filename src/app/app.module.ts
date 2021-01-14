@@ -12,6 +12,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TokenInterceptorService } from '../app/services/token-interceptor.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -21,6 +22,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    MatSnackBarModule,
     SocketIoModule.forRoot(config),
     MDBBootstrapModule,
     BrowserAnimationsModule,
