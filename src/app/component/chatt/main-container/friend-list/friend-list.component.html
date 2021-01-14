@@ -70,45 +70,51 @@
         </div>
         <div class="inbox_chat">
           <!-- ----------------------------------friend List------------------------------------------------- -->
-          <div  *ngFor="let friends of friendList; index as i">
-            
-          <div class="chat_list" [ngClass]="flag == i ? 'primary' : ' '">
-            <div class="big" >
-              <div class="chat_people">
-                <br />
-                <div>
-                  <a
-                    class="chattt_msg"
-                    href="javascript:void('0')"
-                    (click)="sendData(friends, i)"
-                    ><div class="chat_img">
-                      <img
-                        src="https://ptetutorials.com/images/user-profile.png"
-                        alt="sunil"
-                      />
-                    </div>
-                    <div class="chat_ib">
-                      <h5 style="font-family: 'Times New Roman', Times, serif">
-                        {{ friends.userName
-                        }}<i
-                          class="fa fa-circle"
-                          aria-hidden="true"
-                          style="font-size: 10px; margin-left: 5px"
-                          [ngClass]="checkOnline(friends.userName)"
-                        ></i>
-                        <span *ngFor="let messages of lastMessageData "class="chat_date"
-                          ><span *ngIf="friends.friendId === messages.friendId"
-                            ><span>{{messages.chats[0].createdOn | date: 'shortTime'}}</span>
-                            <p>{{messages.chats[0].message}}</p></span
-                          ></span
+          <div *ngFor="let friends of friendList; index as i">
+            <div class="chat_list" [ngClass]="flag == i ? 'primary' : ' '">
+              <div class="big">
+                <div class="chat_people">
+                  <br />
+                  <div>
+                    <a
+                      class="chattt_msg"
+                      href="javascript:void('0')"
+                      (click)="sendData(friends, i)"
+                      ><div class="chat_img">
+                        <img
+                          src="https://ptetutorials.com/images/user-profile.png"
+                          alt="sunil"
+                        />
+                      </div>
+                      <div class="chat_ib">
+                        <h5
+                          style="font-family: 'Times New Roman', Times, serif"
                         >
-                      </h5>
-                    </div></a
-                  >
+                          {{ friends.userName
+                          }}<i
+                            class="fa fa-circle"
+                            aria-hidden="true"
+                            style="font-size: 10px; margin-left: 5px"
+                            [ngClass]="checkOnline(friends.userName)"
+                          ></i>
+                          <span
+                            *ngFor="let messages of lastMessageData"
+                            class="chat_date"
+                            ><span
+                              *ngIf="friends.friendId === messages.friendId"
+                              ><span>{{
+                                messages.chats[0].createdOn | date: 'shortTime'
+                              }}</span>
+                              <p>{{ messages.chats[0].message }}</p></span
+                            ></span
+                          >
+                        </h5>
+                      </div></a
+                    >
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
       </div>

@@ -64,7 +64,7 @@ export class ChatBoxComponent implements OnInit {
       senderName: this.userName,
     };
     this.chatService.sendMessage(messageData);
-    this.chatService.notTyping( this.activateRoute.snapshot.params.id);
+    this.chatService.notTyping(this.activateRoute.snapshot.params.id);
     this.messageList.push(messageData);
     this.messageForm.reset();
     this.chatService.getlatMessage();
@@ -81,7 +81,7 @@ export class ChatBoxComponent implements OnInit {
   }
 
   typing(): void {
-    this.chatService.onTyping( this.activateRoute.snapshot.params.id);
+    this.chatService.onTyping(this.activateRoute.snapshot.params.id);
   }
 
   checkId(): void {
@@ -92,6 +92,4 @@ export class ChatBoxComponent implements OnInit {
       }
     });
   }
-
-  
 }

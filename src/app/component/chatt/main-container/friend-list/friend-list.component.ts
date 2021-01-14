@@ -16,14 +16,14 @@ export class FriendListComponent implements OnInit {
   public friendList: any = [];
   public lastMessageData: any = [];
   public userName: string;
-  public  friendData: any;
-  public  id: any;
-  public  friendId: any;
-  public   online = false;
-  public  searchText: any;
-  public  error: any;
-  public   activeUser: any = [];
-  public   flag;
+  public friendData: any;
+  public id: any;
+  public friendId: any;
+  public online = false;
+  public searchText: any;
+  public error: any;
+  public activeUser: any = [];
+  public flag;
 
   constructor(
     private getsetService: GetsetService,
@@ -56,7 +56,6 @@ export class FriendListComponent implements OnInit {
     this.chatService.notification().subscribe((message: any) => {
       this.lastMessageData = message;
     });
-   
   }
 
   async loadfriendList(): Promise<void> {
@@ -120,7 +119,10 @@ export class FriendListComponent implements OnInit {
   async getAll(): Promise<void> {
     this.lastMessageData = await this.apiService.request('getAll');
     this.lastMessageData.sort((a, b) => {
-      return   new Date(b.chats[0].createdOn).valueOf() - new Date(a.chats[0].createdOn).valueOf();
+      return (
+        new Date(b.chats[0].createdOn).valueOf() -
+        new Date(a.chats[0].createdOn).valueOf()
+      );
     });
   }
 
@@ -129,7 +131,4 @@ export class FriendListComponent implements OnInit {
     localStorage.removeItem('token');
     this.router.navigateByUrl('/login');
   }
-
-
 }
-
