@@ -1,8 +1,6 @@
-import { collectExternalReferences } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { ApiService } from 'src/app/services/api.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { GetsetService } from 'src/app/services/getset.service';
@@ -47,24 +45,31 @@ export class FriendListComponent implements OnInit {
     this.chatService.getUser('user');
     this.loadactiveUser();
     this.loadfriendList();
-    this.getAll();
     this.chatService.onlogOut().subscribe((message: any) => {
       this.activeUser = this.activeUser?.filter((user) => {
         return user !== message;
       });
     });
     this.chatService.notification().subscribe((message: any) => {
-      this.lastMessageData = message;
+      this.friendData = this.sortFriends(message);
     });
   }
 
   async loadfriendList(): Promise<void> {
-    this.friendData = await this.apiService.request('friend', {
+    const data = await this.apiService.request('friend', {
       userId: this.id,
     });
-    this.friendData?.result.friends.forEach((element) => {
-      this.friendList.push(element);
-    });
+    this.friendData = this.sortFriends(data);
+  }
+
+  sortFriends(data): void{
+    return data.sort((a, b) => {
+      console.log(a);
+      return (
+        new Date(b?.chat.chats[0].createdOn).valueOf() -
+        new Date(a?.chat.chats[0].createdOn).valueOf()
+      );
+    });   
   }
 
   loadactiveUser(): void {
@@ -107,23 +112,13 @@ export class FriendListComponent implements OnInit {
 
   checkOnline(name): any {
     // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < this.friendList.length; i++) {
+    for (let i = 0; i < this.friendData.length; i++) {
       if (this.activeUser.indexOf(name) > -1) {
         return 'online';
       } else {
         return 'ofline';
       }
     }
-  }
-
-  async getAll(): Promise<void> {
-    this.lastMessageData = await this.apiService.request('getAll');
-    this.lastMessageData.sort((a, b) => {
-      return (
-        new Date(b.chats[0].createdOn).valueOf() -
-        new Date(a.chats[0].createdOn).valueOf()
-      );
-    });
   }
 
   logout(): void {

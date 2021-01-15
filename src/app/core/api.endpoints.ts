@@ -24,11 +24,7 @@ export class ApiEndpoint {
       online: {
         url: 'online',
         method: 'POST',
-      },
-      getAll: {
-        url: 'getAll',
-        method: 'POST',
-      },
+      }
     };
   }
 }
