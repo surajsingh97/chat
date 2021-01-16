@@ -12,12 +12,9 @@ import { GetsetService } from 'src/app/services/getset.service';
   styleUrls: ['./friend-list.component.css'],
 })
 export class FriendListComponent implements OnInit {
-  public friendList: any = [];
-  public lastMessageData: any = [];
   public userName: string;
   public friendData: any;
   public id: any;
-  public friendId: any;
   public online = false;
   public searchText: any;
   public error: any;
@@ -51,6 +48,17 @@ export class FriendListComponent implements OnInit {
         return user !== message;
       });
     });
+    this.notify();
+  }
+
+  async loadfriendList(): Promise<void> {
+    const data = await this.apiService.request('friend', {
+      userId: this.id,
+    });
+    this.friendData = this.sortFriends(data);
+  }
+
+  notify(): void {
     this.chatService.notification().subscribe((chatData: any) => {
       console.log(chatData);
       this.friendData.forEach((element) => {
@@ -68,19 +76,11 @@ export class FriendListComponent implements OnInit {
     });
   }
 
-  async loadfriendList(): Promise<void> {
-    const data = await this.apiService.request('friend', {
-      userId: this.id,
-    });
-    this.friendData = this.sortFriends(data);
-    console.log(this.friendData);
-  }
-
   sortFriends(data): void {
     return data.sort((a, b) => {
       return (
-        new Date(a?.chat.chats[0].createdOn).valueOf() -
-        new Date(b?.chat.chats[0].createdOn).valueOf()
+        new Date(b?.chat.chats[0].createdOn).valueOf() -
+        new Date(a?.chat.chats[0].createdOn).valueOf()
       );
     });
   }
@@ -98,10 +98,8 @@ export class FriendListComponent implements OnInit {
 
   sendData(data, i): void {
     this.flag = i;
-    this.friendId = data.friendId;
-    this.chatService.joinedChat({ id: this.friendId });
     this.getsetService.setValue(data);
-    this.router.navigateByUrl(`/home/chat/${this.friendId}`);
+    this.router.navigateByUrl(`/home/chat/${data.friendId}`);
   }
 
   addFriend(): any {
@@ -111,7 +109,7 @@ export class FriendListComponent implements OnInit {
       })
       .then((data) => {
         if (data.result === 'Added Successfully!') {
-          this.friendList.push({
+          this.friendData.push({
             userName: this.searchText,
           });
           this.error = data.result;
