@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { ApiService } from 'src/app/services/api.service';
 import { ChatService } from 'src/app/services/chat.service';
+import * as _ from 'lodash';
 import { GetsetService } from 'src/app/services/getset.service';
 
 @Component({
@@ -50,28 +51,42 @@ export class FriendListComponent implements OnInit {
         return user !== message;
       });
     });
-    this.chatService.notification().subscribe((message: any) => {
-      this.friendData = this.sortFriends(message);
+    this.chatService.notification().subscribe((chatData: any) => {
+    console.log(chatData);
+    this.friendData.forEach(element => {
+      chatData.forEach(chat => {
+        try{
+          if (element.friendId === chat?.friendId){
+            element.chat = chat;
+          }
+        }catch (e){
+          console.log('something wrong happenend');
+        }
+      });
     });
+    this.friendData = this.sortFriends(this.friendData);
+      });
   }
+
 
   async loadfriendList(): Promise<void> {
     const data = await this.apiService.request('friend', {
       userId: this.id,
     });
     this.friendData = this.sortFriends(data);
+    console.log(this.friendData);
   }
 
-  sortFriends(data): void{
+  sortFriends(data): void {
     return data.sort((a, b) => {
-      console.log(a);
       return (
-        new Date(b?.chat.chats[0].createdOn).valueOf() -
-        new Date(a?.chat.chats[0].createdOn).valueOf()
+        new Date(a?.chat.chats[0].createdOn).valueOf() -
+        new Date(b?.chat.chats[0].createdOn).valueOf()
       );
-    });   
+    });
   }
 
+   
   loadactiveUser(): void {
     this.chatService.onlogIn().subscribe((message: any) => {
       // tslint:disable-next-line: prefer-for-of

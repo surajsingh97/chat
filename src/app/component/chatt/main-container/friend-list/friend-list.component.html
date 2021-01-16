@@ -98,9 +98,10 @@
                             [ngClass]="checkOnline(friends.userName)"
                           ></i>
                           <span class="chat_date">{{
-                            friends.chat.chats[0].createdOn | date: 'shortTime'
-                          }}</span></h5>
-                          <p>{{ friends.chat.chats[0].message }}</p>
+                            friends.chat?.chats[0].createdOn | date: 'shortTime'
+                          }}</span>
+                        </h5>
+                        <p>{{ friends.chat?.chats[0].message }}</p>
                       </div></a
                     >
                   </div>

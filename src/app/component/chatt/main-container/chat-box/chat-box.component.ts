@@ -67,7 +67,7 @@ export class ChatBoxComponent implements OnInit {
     this.chatService.notTyping(this.activateRoute.snapshot.params.id);
     this.messageList.push(messageData);
     this.messageForm.reset();
-    this.chatService.getlatMessage( this.userId);
+    this.chatService.getlatMessage(this.userId);
   }
 
   async loadMessages(params): Promise<void> {

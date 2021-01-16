@@ -24,7 +24,7 @@ export class ApiEndpoint {
       online: {
         url: 'online',
         method: 'POST',
-      }
+      },
     };
   }
 }
