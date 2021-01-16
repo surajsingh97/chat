@@ -14,12 +14,12 @@ export class ChatService {
     this.socket.emit('message', msg);
   }
 
-  onTyping(msg): void {
-    this.socket.emit('typing', msg);
+  onTyping(): void {
+    this.socket.emit('typing', );
   }
 
-  notTyping(msg): void {
-    this.socket.emit('nottyping', msg);
+  notTyping(): void {
+    this.socket.emit('nottyping');
   }
 
   login(msg): void {
@@ -49,7 +49,7 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 
   public getTyping = () => {
     // tslint:disable-next-line: deprecation
@@ -58,7 +58,7 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 
   public noTyping = () => {
     // tslint:disable-next-line: deprecation
@@ -67,7 +67,7 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 
   public onlogIn = () => {
     // tslint:disable-next-line: deprecation
@@ -76,7 +76,7 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 
   public onlogOut = () => {
     // tslint:disable-next-line: deprecation
@@ -85,7 +85,7 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 
   public notification = () => {
     // tslint:disable-next-line: deprecation
@@ -94,5 +94,5 @@ export class ChatService {
         observer.next(message);
       });
     });
-  };
+  }
 }
