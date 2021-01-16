@@ -52,22 +52,21 @@ export class FriendListComponent implements OnInit {
       });
     });
     this.chatService.notification().subscribe((chatData: any) => {
-    console.log(chatData);
-    this.friendData.forEach(element => {
-      chatData.forEach(chat => {
-        try{
-          if (element.friendId === chat?.friendId){
-            element.chat = chat;
+      console.log(chatData);
+      this.friendData.forEach((element) => {
+        chatData.forEach((chat) => {
+          try {
+            if (element.friendId === chat?.friendId) {
+              element.chat = chat;
+            }
+          } catch (e) {
+            console.log('something wrong happenend');
           }
-        }catch (e){
-          console.log('something wrong happenend');
-        }
+        });
       });
+      this.friendData = this.sortFriends(this.friendData);
     });
-    this.friendData = this.sortFriends(this.friendData);
-      });
   }
-
 
   async loadfriendList(): Promise<void> {
     const data = await this.apiService.request('friend', {
@@ -86,7 +85,6 @@ export class FriendListComponent implements OnInit {
     });
   }
 
-   
   loadactiveUser(): void {
     this.chatService.onlogIn().subscribe((message: any) => {
       // tslint:disable-next-line: prefer-for-of
