@@ -99,6 +99,7 @@ export class FriendListComponent implements OnInit {
   sendData(data, i): void {
     this.flag = i;
     this.getsetService.setValue(data);
+    this.chatService.joinedChat(data.friendId);
     this.router.navigateByUrl(`/home/chat/${data.friendId}`);
   }
 

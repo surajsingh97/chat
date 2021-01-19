@@ -14,12 +14,12 @@ export class ChatService {
     this.socket.emit('message', msg);
   }
 
-  onTyping(): void {
-    this.socket.emit('typing');
+  onTyping(msg: any): void {
+    this.socket.emit('typing', msg);
   }
 
-  notTyping(): void {
-    this.socket.emit('nottyping');
+  notTyping(msg: any): void {
+    this.socket.emit('nottyping', msg);
   }
 
   login(msg): void {
@@ -79,7 +79,7 @@ export class ChatService {
   }
 
   public onlogOut = () => {
-    // tslint:disable-next-line: deprecation
+   // tslint:disable-next-line: deprecation
     return Observable.create((observer) => {
       this.socket.on('logout', (message: any) => {
         observer.next(message);
