@@ -81,9 +81,9 @@ export class ChatBoxComponent implements OnInit {
 
   typing(e): void {
     if (e.keyCode === 13) {
-      this.chatService.notTyping( this.activateRoute.snapshot.params.id);
+      this.chatService.notTyping(this.activateRoute.snapshot.params.id);
     } else {
-      this.chatService.onTyping( this.activateRoute.snapshot.params.id);
+      this.chatService.onTyping(this.activateRoute.snapshot.params.id);
     }
   }
 
